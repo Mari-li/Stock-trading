@@ -1,0 +1,66 @@
+{{ include('base.twig') }}
+
+{% block profile %}
+
+    <div class="container mx-auto px-2">
+        <form method="post">
+            <section class="py-10 px-20 bg-gray-600">
+                <div class="flex flex-wrap -mx-4 -mb-4">
+
+                    {% set TOTAL = 200 %}
+                    {% for stock in stocks %}
+
+                        {% if stock.changes < 0 %}
+                            {% set color = 'red-500' %}
+                        {% else %}
+                            {% set color = 'green-500' %}
+                        {% endif %}
+
+                        <div class="md:w-1/4 px-3 my-3 ">
+                            <div class="bg-gray-200 shadow p-4 rounded lg:w-64 mx-6">
+                                <div class="text-center mt-4 font-bold">
+                                    <p class="text-2xl text-gray-600 ">{{ stock.symbol }}
+                                    </p>
+                                    <p class="text-2xl  text-{{ color }} mt-1">{{ stock.changes }}
+                                    </p>
+                                </div>
+                                <div class="flex justify-center mt-4 text-xs">
+                                    <img class="shadow sm:w-12 sm:h-12 w-10 h-10 rounded-full"
+                                         src="{{ stock.companyLogo }}"
+                                         alt="{{ stock.companyName }}"/>
+                                </div>
+                                <div class="mt-6 flex justify-between text-center">
+                                    <div>
+                                        <p class="text-gray-700 text-xl font-bold">{{ stock.amount }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-700 font-bold">{{ stock.price | round(2) }}$
+                                        </p>
+                                        <p class="text-xs mt-2 text-gray-600 font-hairline">({{ stock.totalPaid }})$
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-700 font-bold">{{ stock.value| round(2) }}$
+                                        </p>
+                                        <p class="text-xs mt-2 text-gray-700 font-hairline">({{ stock.totalValue }})$
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mt-6">
+                                    <button type="submit" formaction="/sell" value="{{ stock.symbol }}" name="sell"
+                                            class="rounded shadow-md w-full items-center shadow bg-yellow-600 px-4 py-2 text-white hover:bg-yellow-900">
+                                        Sell
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </section>
+        </form>
+    </div>
+
+
+{% endblock %}

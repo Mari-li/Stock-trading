@@ -4,13 +4,8 @@
 {% block content %}
 
 
-<div
-        class="container max-w-md mx-auto xl:max-w-3xl flex bg-white rounded-lg shadow overflow-hidden"
->
-    <div class="relative hidden xl:block xl:w-1/2 h-full">
-        <img class="absolute h-auto w-full object-cover"
-                src="" alt="image"/>
-    </div>
+<section class="container max-w-md mx-auto xl:max-w-3xl flex bg-white rounded-lg shadow overflow-hidden">
+
     <div class="w-full xl:w-1/2 p-8">
         <form method="post" action="" >
             <h1 class=" text-2xl font-bold">Buy stocks</h1>
@@ -21,7 +16,7 @@
                 </label>
                 <input
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
-                        name="symbol" type="text" placeholder="Enter stock symbol"/>
+                        name="symbol" type="text" placeholder="Enter stock symbol" required/>
             </div>
             <div class="mb-6 mt-6">
                 <label
@@ -32,7 +27,7 @@
                         class="text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline h-10"
                         name="amount"
                         type="text"
-                        placeholder="Enter amount"/>
+                        placeholder="Enter amount" required/>
 
             </div>
             <div class="flex w-full mt-8">
@@ -41,9 +36,11 @@
                         type="submit" name="buy">
                     Buy
                 </button>
+
             </div>
         </form>
     </div>
-</div>
+
+</section>
 
 {% endblock %}

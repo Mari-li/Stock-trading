@@ -1,27 +1,52 @@
 <?php
 
 use App\Controllers\StockController;
+use App\Models\Wallet;
+use App\Repositories\FinnhubRepository;
 use App\Repositories\MySQLStockRepository;
 use App\Repositories\StockRepository;
 use App\Services\stockBuyService;
+use App\Services\StockPortfolioService;
+use App\Services\StockSellService;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 require_once '../vendor/autoload.php';
 
+session_start();
+
 
 $container = new League\Container\Container;
-$container->add('loader', FilesystemLoader::class )->addArgument('/mnt/c/projects/stock-trading/app/Views/');
+$container->add('loader', FilesystemLoader::class)->addArgument('/mnt/c/projects/stock-trading/app/Views/');
 $container->add('twig', Environment::class)->addArgument('loader');
+$container->add(FinnhubRepository::class, FinnhubRepository::class);
 $container->add(StockRepository::class, MySQLStockRepository::class);
-$container->add(StockBuyService::class, StockBuyService::class)->addArgument(StockRepository::class);
-$container->add(StockController::class, StockController::class)->addArguments([StockBuyService::class, 'twig']);
+$container->add(Wallet::class, Wallet::class);
+$container->add(StockBuyService::class, StockBuyService::class)->addArguments
+([
+    StockRepository::class,
+    FinnhubRepository::class
+]);
+$container->add(StockSellService::class, StockSellService::class)->addArgument(StockRepository::class);
+$container->add(StockPortfolioService::class, StockPortfolioService::class)->addArguments
+([
+    StockRepository::class,
+    FinnhubRepository::class
+]);
+$container->add(StockController::class, StockController::class)->addArguments
+([
+    StockBuyService::class,
+    StockPortfolioService::class,
+    StockSellService::class,
+    Wallet::class,
+    'twig'
+]);
 
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    $r->addRoute('GET', '/', [StockController::class, 'index']);
     $r->addRoute('POST', '/buy', [StockController::class, 'buyStocks']);
-    $r->addRoute('GET', '/buy', [StockController::class, 'buyStocks']);
+    $r->addRoute('GET', '/', [StockController::class, 'showStockPortfolio']);
+    $r->addRoute('POST', '/sell', [StockController::class, 'sellStocks']);
 
 });
 

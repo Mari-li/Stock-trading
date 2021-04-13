@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
-
 class Stock
 {
     private string $symbol;
     private int $amount;
-//    private float $price;
-//    private float $value;
+    private float $price;
 
 
-    public function __construct(string $symbol, int $amount)
+    public function __construct(string $symbol, int $amount, float $price)
     {
         $this->symbol = $symbol;
         $this->amount = $amount;
-
+        $this->price = $price;
     }
 
 
@@ -28,12 +26,6 @@ class Stock
     public function getAmount(): int
     {
         return $this->amount;
-    }
-
-
-    public function getValue(): float
-    {
-        return $this->value;
     }
 
 

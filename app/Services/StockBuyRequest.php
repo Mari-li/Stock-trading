@@ -8,13 +8,13 @@ class StockBuyRequest
 {
     private string $symbol;
     private int $amount;
-//    private float $price;
-//    private float $value;
+    private float $price;
 
-    public function __construct(string $symbol, int $amount)
+    public function __construct(string $symbol, int $amount, float $price)
     {
         $this->symbol = $symbol;
         $this->amount = $amount;
+        $this->price = $price;
     }
 
 
@@ -28,5 +28,12 @@ class StockBuyRequest
     {
         return $this->amount;
     }
+
+
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
 
 }
