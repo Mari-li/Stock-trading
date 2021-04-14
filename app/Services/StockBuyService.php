@@ -31,15 +31,6 @@ class StockBuyService
     }
 
 
-    private function checkIfExist(string $request): bool
-    {
-        if (count($this->stockRepository->select($request)) == 1) {
-            return true;
-        }
-        return false;
-    }
-
-
     public function getCurrentPrice(string $request): float
     {
         return $this->finnHub->getCurrentPrice($request);

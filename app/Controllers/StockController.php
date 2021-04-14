@@ -73,10 +73,11 @@ class StockController
     public function sellStocks(): void
     {
         $request = $_POST['sell'];
-        // $stock =  $this->stockSellService->getStock($stock);
-        $newPrice = $this->stockBuyService->getCurrentPrice($request);
+        $stock =  $this->stockSellService->getStock($request);
+        $sellingPrice = $this->stockBuyService->getCurrentPrice($request);
         $this->stockSellService->sell($request);
-        $this->wallet->setMoney($newPrice);
+        $sellingValue = $sellingPrice * $stock->getAmount();
+        $this->wallet->setMoney($sellingValue);
         header('Location:/');
     }
 }

@@ -18,7 +18,6 @@ class StockCollection
             $stock->getSymbol(),
             $stock->getAmount(),
             $stock->getPrice(),
-            $stock->getValue()
         );
     }
 

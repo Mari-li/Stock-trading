@@ -33,14 +33,15 @@ class MySQLStockRepository implements StockRepository
         $this->db->insert($this->table, [
             'symbol' => $stock->getSymbol(),
             'amount' => $stock->getAmount(),
-            'price' => $stock->getPrice()
+            'purchase_price' => $stock->getPrice(),
+            'purchase_date' => $stock->getDate()
         ]);
     }
 
 
     public function select(string $request): array
     {
-        $stocks = $this->db->select($this->table, ['symbol', 'amount', 'price'], ['symbol' => $request]);
+        $stocks = $this->db->select($this->table, ['symbol', 'amount', 'purchase_price'], ['symbol' => $request]);
         var_dump($stocks);
         return $stocks;
 
@@ -55,13 +56,13 @@ class MySQLStockRepository implements StockRepository
 
     public function selectAll(): array
     {
-        return $this->db->select($this->table, ['symbol', 'amount', 'price']);
+        return $this->db->select($this->table, ['symbol', 'amount', 'purchase_price']);
     }
 
 
     public function selectBySymbol(string $symbol): StockCollection
     {
-        $dbStocks = $this->db->select($this->table, ['symbol', 'amount', 'price'], ['symbol' => $symbol]);
+        $dbStocks = $this->db->select($this->table, ['symbol', 'amount', 'purchase_price'], ['symbol' => $symbol]);
         $stocks = new StockCollection();
         foreach ($dbStocks as $dbStock)
         {
@@ -69,13 +70,10 @@ class MySQLStockRepository implements StockRepository
                 new Stock(
                     $dbStock['symbol'],
                     $dbStock['amount'],
-                    $dbStock['price'],
-                    $dbStock['price'],
-
+                    $dbStock['purchase_price'],
                 )
             );
         }
-        var_dump($stocks);
         return $stocks;
     }
 

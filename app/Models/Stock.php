@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+
 class Stock
 {
     private string $symbol;
     private int $amount;
     private float $price;
+    private string $date;
 
 
     public function __construct(string $symbol, int $amount, float $price)
@@ -14,6 +16,7 @@ class Stock
         $this->symbol = $symbol;
         $this->amount = $amount;
         $this->price = $price;
+        $this->setDate();
     }
 
 
@@ -32,6 +35,18 @@ class Stock
     public function getPrice(): float
     {
         return $this->price;
+    }
+
+
+    public function getDate(): string
+    {
+        return $this->date;
+    }
+
+
+    public function setDate(): void
+    {
+        $this->date = date('Y-m-d H:i:s');
     }
 
 }

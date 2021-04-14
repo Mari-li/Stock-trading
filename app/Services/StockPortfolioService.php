@@ -26,7 +26,7 @@ class StockPortfolioService
 
             $stockInfo ['symbol'] = $savedStock['symbol'];
             $stockInfo ['amount'] = $savedStock['amount'];
-            $stockInfo ['price'] = $savedStock['price'];
+            $stockInfo ['price'] = $savedStock['purchase_price'];
             $stockInfo ['totalPaid'] = $stockInfo ['price'] * $stockInfo ['amount'];
             $stockInfo ['value'] = $this->finnhub->getCurrentPrice($savedStock['symbol']);
             $stockInfo ['totalValue'] = $stockInfo ['value'] * $stockInfo ['amount'];
